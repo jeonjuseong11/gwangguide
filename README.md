@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# 2023 너른고울 미래스쿨빌 해커톤
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## GwangjuGuide(GG)
 
-## Available Scripts
+### 광주중앙고, 광주중 학생들이 이용할 광주 식당 리뷰 웹 서비스
 
-In the project directory, you can run:
+#### 사람들은 해당 서비스를 통해 광주 현지인 (학생들)이 인증한 맛집을 방문할 수 있으며
 
-### `npm start`
+#### 학생들은 동아리 활동을 통해 광주 식당들을 리뷰할 수 있으며 해당 웹의 리포터 역할을 수행
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### 더 나아가 지역 사회 발전에도 도움이 되는 웹 프로젝트
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 사용 언어
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### React
 
-### `npm run build`
+## 사용 라이브러리
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Antd( ant-design )
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+이틀간 학교에서 진행하였으며 계속 개선해 나갈 예정
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 구현된 기능
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1.  회원 관리
+    - 학생들이 특정 주소르 접근하여 리포터로써 글을 작성할 수 있는 회원으로 로그인, 회원가입할 수 있음
+2.  리뷰작성
+    - 학생들은 리뷰를 작성할 수 있으며 작성한 리뷰에 대한 수정은 실제 학생 회원들만 가능함
+    - 비회원들은 리뷰를 찾아보고 조회할 수 만 있음
+3.  리뷰 렌더링
+    - 로튼토마토의 토마토 아이콘을 참고하여 각 별점별 아이콘을 지정
+    - 썩은 것은 음식점에 안좋은 이미지를 줄 수 있어 개선할 수 있도록 씨앗부터 성장하여 나무가 되는 아이콘을 선정
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 추가할 기능
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.  음식점 관리
+    - 학생들은 음식점들이 없어졌으면 삭제할 수 있으며 새로운 식당이 생겼어도 학생 회원이 새롭게 등록할 수 있음
+    - 음식점을 등록할 때 사진을 첨부할 수 있음
