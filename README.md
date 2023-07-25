@@ -2,6 +2,8 @@
 
 ## GwangjuGuide(GG)
 
+https://guangcheulin.future-schoolville.com/
+
 ### 광주중앙고, 광주중 학생들이 이용할 광주 식당 리뷰 웹 서비스
 
 #### 사람들은 해당 서비스를 통해 광주 현지인 (학생들)이 인증한 맛집을 방문할 수 있으며
