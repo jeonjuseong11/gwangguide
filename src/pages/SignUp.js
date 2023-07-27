@@ -33,7 +33,7 @@ const SignUp = () => {
       style={{
         backgroundColor: "#ffffff",
         padding: "2rem",
-        marginTop: "13rem",
+        marginTop: "5rem",
         marginBottom: "17rem",
         borderRadius: "10px",
         width: "25%",

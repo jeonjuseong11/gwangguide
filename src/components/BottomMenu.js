@@ -40,7 +40,7 @@ const BottomMenu = ({ selectedMenu }) => {
       }}
     >
       <Header />
-      <main style={{ height: "42rem" }}>
+      <main style={{ height: "32.5rem" }}>
         <Outlet />
       </main>
       <Menu

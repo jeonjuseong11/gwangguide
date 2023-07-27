@@ -2,27 +2,38 @@ import { LockOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddRestaurant = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("TOKEN");
+  const token = JSON.parse(localStorage.getItem("TOKEN"));
 
   const onFinish = async (values) => {
     console.log(values);
-    // try {
-    // const response = await axios.post(
-    //   "https://ajvxbu60qa.execute-api.ap-northeast-2.amazonaws.com/admin/signup",
-    //   values
-    // );
-    //   console.log("회원가입 성공:", response.data);
-    //   navigate("/login");
-    //   // Do something with the successful response, such as redirect to another page or update the state.
-    // } catch (error) {
-    //   console.log("회원가입 실패:", error);
-    //   alert("중복된 것이 있습니다");
-    //   // Handle the error, such as displaying an error message to the user.
-    // }
+    try {
+      const data = {
+        address: values.address,
+        name: values.name,
+        category: values.category,
+        image: values.image.file.thumbUrl, // values.image.file.thumbUrl -> values.image.fileList로 수정
+      };
+      console.log(data);
+
+      // API 요청
+      const response = await axios.post(
+        `https://ajvxbu60qa.execute-api.ap-northeast-2.amazonaws.com/stores`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token.token}`,
+          },
+        }
+      );
+      alert("식당 등록이 완료되었습니다");
+      navigate(`/restaurant/${response.data.id}`, { replace: true });
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
   };
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
@@ -50,23 +61,7 @@ const AddRestaurant = () => {
       }}
       onFinish={onFinish}
     >
-      <h1>식당 추가</h1>
-      <Form.Item
-        name="address"
-        rules={[
-          {
-            required: true,
-            message: "주소를 입력해주세요",
-          },
-        ]}
-      >
-        <Input
-          style={{ padding: "1rem" }}
-          name="address"
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="주소"
-        />
-      </Form.Item>
+      <h3 style={{ margin: "0", paddingTop: ".5rem", paddingBottom: ".5rem" }}>식당 추가</h3>
       <Form.Item
         name="name"
         rules={[
@@ -76,12 +71,18 @@ const AddRestaurant = () => {
           },
         ]}
       >
-        <Input
-          style={{ padding: "1rem" }}
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="name"
-          placeholder="매장명을 입력해주세요"
-        />
+        <Input style={{ padding: "1rem" }} type="name" placeholder="매장명을 입력해주세요" />
+      </Form.Item>
+      <Form.Item
+        name="address"
+        rules={[
+          {
+            required: true,
+            message: "주소를 입력해주세요",
+          },
+        ]}
+      >
+        <Input style={{ padding: "1rem" }} name="address" placeholder="주소를 입력해주세요" />
       </Form.Item>
       <Form.Item
         name="category"
@@ -94,16 +95,17 @@ const AddRestaurant = () => {
       >
         <Input style={{ padding: "1rem" }} type="category" placeholder="카테고리를 입력해주세요." />
       </Form.Item>
+      <label>매장 사진</label>
       <Form.Item
         name="image"
         rules={[
           {
             required: true,
-            message: "카테고리를 입력해주세요.",
+            message: "이미지를 업로드해주세요",
           },
         ]}
       >
-        <Upload action="/upload.do" listType="picture-card">
+        <Upload listType="picture-card">
           <div>
             <PlusOutlined />
             <div

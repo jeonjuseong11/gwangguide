@@ -71,11 +71,11 @@ const ReviewPost = () => {
   }, [id]);
   return (
     <div style={{ paddingLeft: "2rem", paddingRight: "2rem", textAlign: "left" }}>
-      {selectedData && <h1>{selectedData.name}</h1>}
-      <h3>리뷰 작성</h3>
+      {selectedData && (
+        <h3 style={{ marginTop: "0.5rem", marginBottom: "0" }}> {selectedData.name} 리뷰 작성</h3>
+      )}
       <Form name="reviewForm" onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
         <label>리뷰 내용</label>
-
         <Form.Item
           name="review"
           rules={[
