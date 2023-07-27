@@ -192,7 +192,7 @@ function Home() {
                   {item.content}
                 </Link>
                 {hasToken && (
-                  <div style={{ position: "absolute", right: "1rem", top: ".5rem" }}>
+                  <div style={{ position: "relative", left: "21rem", top: "-10rem" }}>
                     <Dropdown overlay={<DropdownMenu item={item} />} trigger={["hover"]}>
                       <EllipsisOutlined />
                     </Dropdown>
