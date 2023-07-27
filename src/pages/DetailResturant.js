@@ -1,4 +1,4 @@
-import { Rate } from "antd";
+import { Rate, Spin, Empty } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -7,16 +7,17 @@ import ReviewList from "../components/ReviewList";
 function DetailRestaurant() {
   const { id } = useParams();
 
+  const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
+  const [restaurantData, setRestaurantData] = useState(null);
+  const [rateText, setRateText] = useState("평가 없음");
+
   useEffect(() => {
-    // API 요청을 보내고 데이터를 받아오는 함수
-    const fetchData = async () => {
+    const fetchRestaurantData = async () => {
       try {
-        // API 요청
         const response = await axios.get(
           `https://ajvxbu60qa.execute-api.ap-northeast-2.amazonaws.com/stores/${id}?includeReviews=true`
         );
-        // API로 받아온 리뷰 데이터를 상태에 저장
         const updatedData = response.data.Reviews.map((item) => {
           const averageRating =
             (item.taste_rating + item.service_rating + item.price_rating + item.hygiene_rating) / 4;
@@ -27,24 +28,21 @@ function DetailRestaurant() {
         });
         setReviews(updatedData);
         setRestaurantData(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching reviews:", error);
+        console.error("Error fetching restaurant data:", error);
+        setLoading(false);
       }
     };
 
-    fetchData();
+    fetchRestaurantData();
   }, []);
-
-  const [restaurantData, setRestaurantData] = useState(null);
-  const [rateText, setRateText] = useState("평가 없음"); // Initialize with default value
 
   useEffect(() => {
     if (reviews.length > 0) {
-      // Calculate averageRating for the reviews
       const totalAverageRating = reviews.reduce((sum, review) => sum + review.averageRating, 0);
       const overallAverageRating = totalAverageRating / reviews.length;
 
-      // Set rateText based on the overallAverageRating
       switch (Math.round(overallAverageRating)) {
         case 5:
           setRateText("너무 좋아요");
@@ -69,12 +67,28 @@ function DetailRestaurant() {
     }
   }, [reviews]);
 
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
+
   if (!restaurantData) {
-    return <div>해당 식당이 없습니다...</div>;
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}
+      >
+        <Empty description="해당 가게가 없습니다." />
+      </div>
+    );
   }
 
   return (
-    <div style={{ overflowY: "auto", maxHeight: "80vh", height: "calc(100vh - 16rem)" }}>
+    <div style={{ overflowY: "auto", maxHeight: "80vh", height: "calc(100vh - 9rem)" }}>
       <div
         style={{
           borderRadius: "10px",
