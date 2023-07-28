@@ -19,7 +19,7 @@ const RestaurantList = ({ data, loading, hasToken, onEdit, onDelete }) => {
   };
 
   return (
-    <div style={{ height: "23rem", overflowY: "auto" }}>
+    <div style={{ height: "45rem", overflowY: "auto" }}>
       {loading ? (
         <div
           style={{
@@ -37,7 +37,7 @@ const RestaurantList = ({ data, loading, hasToken, onEdit, onDelete }) => {
           size="small"
           style={{
             textAlign: "left",
-            height: "23rem",
+            height: "35rem",
             position: "relative",
             overflowX: "hidden", // 가로 스크롤 숨김
             whiteSpace: "nowrap",

@@ -34,17 +34,17 @@ const BottomMenu = ({ selectedMenu }) => {
       style={{
         borderRadius: "10px",
         width: "30rem",
-        paddingTop: "1rem",
         backgroundColor: "white",
         textAlign: "center",
+        height: "43rem",
       }}
     >
       <Header />
-      <main style={{ height: "32.5rem" }}>
+      <main style={{ minHeight: "34rem" }}>
         <Outlet />
       </main>
       <Menu
-        style={{ marginTop: "1rem", justifyContent: "center", border: "0", marginBottom: "1rem" }}
+        style={{ justifyContent: "center", border: "0", marginBottom: "1rem" }}
         mode="horizontal"
       >
         {items.map((item) => (

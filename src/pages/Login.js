@@ -39,6 +39,7 @@ const Login = () => {
         borderRadius: "10px",
         width: "25%",
         minWidth: "20rem",
+        height: "28rem",
       }}
       name="normal_login"
       className="login-form"
