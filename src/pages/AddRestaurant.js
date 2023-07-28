@@ -1,5 +1,5 @@
-import { LockOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Upload, message } from "antd";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const AddRestaurant = () => {
         address: values.address,
         name: values.name,
         category: values.category,
-        image: values.image.file.thumbUrl, // values.image.file.thumbUrl -> values.image.fileList로 수정
+        image: values.image.file.thumbUrl,
       };
       console.log(data);
 
@@ -42,7 +42,26 @@ const AddRestaurant = () => {
       navigate("/");
     }
   }, []);
+  const checkImageType = (file) => {
+    const isImage = file.type.startsWith("image/");
+    if (!isImage) {
+      message.error("이미지 파일만 업로드 가능합니다.");
+    }
+    return isImage;
+  };
 
+  const checkImageSize = (file) => {
+    const maxSizeMB = 5; // Maximum size in MB
+    const isSizeValid = file.size / 1024 / 1024 < maxSizeMB;
+    if (!isSizeValid) {
+      message.error(`이미지 크기는 최대 ${maxSizeMB}MB까지 허용됩니다.`);
+    }
+    return isSizeValid;
+  };
+
+  const beforeUpload = (file) => {
+    return checkImageType(file) && checkImageSize(file);
+  };
   return (
     <Form
       style={{
@@ -105,7 +124,7 @@ const AddRestaurant = () => {
           },
         ]}
       >
-        <Upload listType="picture-card">
+        <Upload listType="picture-card" beforeUpload={beforeUpload}>
           <div>
             <PlusOutlined />
             <div
