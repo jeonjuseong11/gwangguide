@@ -26,16 +26,18 @@ const ReviewList = ({ reviews }) => {
           marginTop: "0",
           textAlign: "left",
           marginLeft: "2rem",
-          paddingTop: "1rem",
-          borderTop: "1px solid black",
+          paddingTop: "1.5rem",
+          borderTop: "1px solid #f2f2f2",
           marginRight: "2rem",
         }}
       >
-        Reviews
+        광슐랭 평점
       </h3>
-      {reviews.map((review, index) => (
-        <ReviewItem key={index} {...review} />
-      ))}
+      {reviews.length !== 0 ? (
+        reviews.map((review, index) => <ReviewItem key={index} {...review} />)
+      ) : (
+        <p style={{ marginTop: "3rem", maginBottom: "3rem" }}>리뷰가 없습니다</p>
+      )}
     </div>
   );
 };

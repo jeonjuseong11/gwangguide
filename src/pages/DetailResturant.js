@@ -1,4 +1,4 @@
-import { Rate, Spin, Empty } from "antd";
+import { Spin, Empty } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -70,7 +70,7 @@ function DetailRestaurant() {
   if (loading) {
     return (
       <div
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}
+        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "33rem" }}
       >
         <Spin size="large" />
       </div>
@@ -88,19 +88,31 @@ function DetailRestaurant() {
   }
 
   return (
-    <div style={{ overflowY: "auto", maxHeight: "80vh", height: "calc(100vh - 9rem)" }}>
+    <div
+      style={{
+        overflow: "hidden",
+        overflowY: "auto",
+        maxHeight: "33rem",
+      }}
+    >
       <div
         style={{
           borderRadius: "10px",
           backgroundColor: "#f2f2f2",
-          height: "15rem",
-          width: "90%",
+          height: "100%",
           margin: "0 auto",
         }}
       >
         <img style={{ width: "100%", height: "100%" }} alt="logo" src={restaurantData.image} />
       </div>
-      <div style={{ paddingTop: "1rem", padding: "2rem", textAlign: "left", paddingBottom: "0" }}>
+      <div
+        style={{
+          paddingTop: "1rem",
+          padding: "2rem",
+          textAlign: "left",
+          paddingBottom: "0",
+        }}
+      >
         <h1 style={{ margin: "0" }}>{restaurantData.name}</h1>
         <div style={{ display: "flex" }}>
           <img

@@ -1,5 +1,5 @@
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Menu, Rate, Modal, Input, message } from "antd";
+import { Modal, Rate, Input, Dropdown, Menu, Avatar, message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -62,20 +62,38 @@ const ReviewItem = ({ id: itemId, review, averageRating, content, Admin }) => {
         return;
       }
 
-      // Send DELETE request to delete the review
-      await axios.delete(
-        `https://ajvxbu60qa.execute-api.ap-northeast-2.amazonaws.com/reviews/${itemId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.token}`,
-          },
-        }
-      );
-      message.success("Review deleted successfully!");
+      // Show confirmation modal before deleting the review
+      Modal.confirm({
+        title: "정말로 이 리뷰를 삭제하시겠습니까?",
+        okText: "확인",
+        okType: "danger",
+        cancelText: "취소",
+        onOk: async () => {
+          try {
+            // Send DELETE request to delete the review
+            await axios.delete(
+              `https://ajvxbu60qa.execute-api.ap-northeast-2.amazonaws.com/reviews/${itemId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token.token}`,
+                },
+              }
+            );
+            message.success("리뷰 삭제 성공");
+          } catch (error) {
+            message.error("리뷰 삭제 실패");
+          }
+        },
+        onCancel() {
+          // Do nothing if user cancels the deletion
+          console.log("취소");
+        },
+      });
     } catch (error) {
-      message.error("Failed to delete review.");
+      message.error("리뷰 삭제 실패");
     }
   };
+
   const token = localStorage.getItem("TOKEN");
   return (
     <div
