@@ -74,6 +74,8 @@ function Home() {
       title: "정말로 이 식당을 삭제하시겠습니까?",
       okText: "확인",
       okType: "danger",
+      centered: true, // Add this prop to center the modal
+
       cancelText: "취소",
       onOk() {
         handleDeleteRestaurant(restaurantId);

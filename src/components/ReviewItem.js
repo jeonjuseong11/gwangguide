@@ -68,6 +68,7 @@ const ReviewItem = ({ id: itemId, review, averageRating, content, Admin }) => {
         okText: "확인",
         okType: "danger",
         cancelText: "취소",
+        centered: true, // Add this prop to center the modal
         onOk: async () => {
           try {
             // Send DELETE request to delete the review
