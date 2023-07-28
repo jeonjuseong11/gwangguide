@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  HeartOutlined,
-  HomeOutlined,
-  OrderedListOutlined,
-  PlusCircleOutlined,
-  ProfileOutlined,
-} from "@ant-design/icons";
+import { HomeOutlined, OrderedListOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import Header from "./Header";
@@ -33,18 +27,24 @@ const BottomMenu = ({ selectedMenu }) => {
     <div
       style={{
         borderRadius: "10px",
-        width: "30rem",
         backgroundColor: "white",
         textAlign: "center",
-        height: "43rem",
+        height: "100vh",
       }}
     >
       <Header />
-      <main style={{ minHeight: "34rem" }}>
+      <main style={{ height: "82vh", overflow: "hidden" }}>
         <Outlet />
       </main>
       <Menu
-        style={{ justifyContent: "center", border: "0", marginBottom: "1rem" }}
+        style={{
+          justifyContent: "center",
+          border: "0",
+          marginBottom: "2vh",
+          marginTop: "2vh",
+
+          backgroundColor: "white",
+        }}
         mode="horizontal"
       >
         {items.map((item) => (
@@ -52,8 +52,9 @@ const BottomMenu = ({ selectedMenu }) => {
             <Menu.Item
               icon={item.icon}
               style={{
-                marginLeft: "1rem",
-                marginRight: "1rem",
+                marginLeft: "2vw",
+                fontSize: "2vh",
+                marginRight: "2vw",
                 borderRadius: "10px",
                 backgroundColor: selectedMenu === item.key ? "#1890ff" : "transparent",
                 color: selectedMenu === item.key ? "white" : "black",

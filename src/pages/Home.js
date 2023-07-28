@@ -139,9 +139,9 @@ function Home() {
 
   return (
     <div>
-      <div style={{ width: "100%", margin: "0 auto", height: "10rem" }}>
+      <div style={{ width: "100vw", margin: "0 auto", height: "20vh" }}>
         <img
-          style={{ width: "100%", objectFit: "fit", height: "10rem" }}
+          style={{ width: "100vw", height: "20vh", objectFit: "cover" }}
           alt="main"
           src={process.env.PUBLIC_URL + "/image/MainImage.jpeg"}
         />
@@ -154,26 +154,28 @@ function Home() {
           onPressEnter={(e) => handleSearch(e.target.value)} // Enter 키를 누를 때만 검색
         />
       </div>
-      <div style={{ height: "23rem", overflowY: "auto" }}>
+      <div style={{ height: "65vh", overflowY: "auto" }}>
         {loading ? (
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100%",
+              height: "50vh",
             }}
           >
             <Spin size="large" />
           </div>
         ) : (
-          <RestaurantList
-            data={filteredData}
-            loading={loading}
-            hasToken={hasToken}
-            onEdit={setEditingRestaurant}
-            onDelete={showDeleteConfirm}
-          />
+          <div style={{ height: "65vh", overflowY: "auto" }}>
+            <RestaurantList
+              data={filteredData}
+              loading={loading}
+              hasToken={hasToken}
+              onEdit={setEditingRestaurant}
+              onDelete={showDeleteConfirm}
+            />
+          </div>
         )}
       </div>
       {/* Modal for editing restaurant information */}

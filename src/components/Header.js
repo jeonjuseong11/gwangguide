@@ -27,7 +27,7 @@ const Header = () => {
         alignItems: "center",
         textAlign: "left",
         margin: "0",
-        padding: "1.5rem",
+        padding: "2vh",
       }}
     >
       <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>

@@ -26,8 +26,8 @@ function App() {
         className="App"
         style={{
           backgroundColor: "#f2f2f2",
-          width: "100%",
-          height: "100vh",
+          width: "100vw",
+          height: "99vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

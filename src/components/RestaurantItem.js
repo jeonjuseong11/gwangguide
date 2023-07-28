@@ -14,7 +14,7 @@ const DropdownMenu = ({ item, onEdit, onDelete }) => (
 );
 
 const RestaurantItem = ({ item, hasToken, onEdit, onDelete, getImageUrl }) => (
-  <List.Item key={item.name} style={{ position: "relative" }}>
+  <List.Item key={item.name} style={{ position: "relative", paddingTop: ".5rem" }}>
     <Link to={`/restaurant/${item.id}`}>
       <List.Item.Meta
         avatar={<img style={{ width: "8rem" }} src={item.image} />}

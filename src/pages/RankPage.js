@@ -20,7 +20,6 @@ function RankingPage() {
       const storesByCategory = {};
       for (const store of stores) {
         const category = store.category;
-        console.log(store.Reviews);
         if (store.Reviews) {
           // Check if store.Reviews exists
           const averageRating =
@@ -63,7 +62,13 @@ function RankingPage() {
   if (loading) {
     return (
       <div
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          width: "100vw",
+        }}
       >
         <Spin size="large" />
       </div>
@@ -81,7 +86,9 @@ function RankingPage() {
   }
   return (
     <div>
-      <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "center" }}>
+      <div
+        style={{ marginBottom: "1rem", display: "flex", justifyContent: "center", width: "100vw" }}
+      >
         {Object.keys(storesByCategory).map((category) => (
           <Button
             shape="circle"
@@ -96,20 +103,43 @@ function RankingPage() {
       </div>
       {selectedCategory ? (
         <div>
-          <h2>{selectedCategory} 랭킹</h2>
+          <h2
+            style={{
+              margin: "0",
+              padding: "1rem",
+              borderTop: "1px solid #f2f2f2",
+              borderBottom: "1px solid #f2f2f2",
+            }}
+          >
+            {selectedCategory} 랭킹
+          </h2>
           {storesByCategory[selectedCategory].length > 0 ? (
             <List
-              style={{ textAlign: "left", padding: "1rem", paddingTop: "0" }}
+              style={{ textAlign: "left" }}
               dataSource={storesByCategory[selectedCategory]}
               renderItem={(item, index) => (
                 <Link to={`/restaurant/${item.id}`}>
-                  <List.Item key={item.id}>
+                  <List.Item key={item.id} style={{ borderBottom: "1px solid #f2f2f2" }}>
                     <List.Item.Meta
-                      title={`${index + 1}. ${item.name}`}
-                      description={
-                        item.Reviews.length === 0
-                          ? "리뷰없음"
-                          : `평점: ${item.averageRating.toFixed(1)}`
+                      title={
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            paddingLeft: "1rem",
+                          }}
+                        >
+                          <p>{index + 1}</p>
+                          <h2 style={{ marginLeft: "1rem", width: "25vw" }}>{item.name}</h2>
+                          <div style={{ marginLeft: "2rem", fontWeight: "500", color: "#a2a2a2" }}>
+                            <p style={{ margin: "0" }}>
+                              {item.Reviews.length === 0
+                                ? "리뷰없음"
+                                : `평점: ${item.averageRating.toFixed(1)}`}
+                            </p>
+                            <p style={{ margin: "0" }}>{item.address}</p>
+                          </div>
+                        </div>
                       }
                     />
                   </List.Item>

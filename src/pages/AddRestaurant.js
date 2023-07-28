@@ -1,15 +1,15 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Upload, message } from "antd";
+import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Upload, message, Modal } from "antd";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+const { confirm } = Modal;
 
 const AddRestaurant = () => {
   const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem("TOKEN"));
 
   const onFinish = async (values) => {
-    console.log(values);
     try {
       const data = {
         address: values.address,
@@ -17,7 +17,6 @@ const AddRestaurant = () => {
         category: values.category,
         image: values.image.file.thumbUrl,
       };
-      console.log(data);
 
       // API 요청
       const response = await axios.post(
@@ -38,8 +37,13 @@ const AddRestaurant = () => {
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
     if (!token) {
-      alert("관리자만 사용가능한 기능입니다.");
-      navigate("/");
+      confirm({
+        title: "알림",
+        icon: <ExclamationCircleOutlined />,
+        content: "관리자만 사용가능한 기능입니다.",
+        onOk: () => navigate("/"),
+        onCancel: () => navigate("/"),
+      });
     }
   }, []);
   const checkImageType = (file) => {
@@ -71,7 +75,7 @@ const AddRestaurant = () => {
         paddingBottom: "0",
         textAlign: "left",
         borderRadius: "10px",
-        minWidth: "20rem",
+        width: "100vw",
       }}
       name="normal_login"
       className="login-form"
@@ -80,7 +84,7 @@ const AddRestaurant = () => {
       }}
       onFinish={onFinish}
     >
-      <h3 style={{ margin: "0", paddingTop: ".5rem", paddingBottom: ".5rem" }}>식당 추가</h3>
+      <h3 style={{ margin: "0", paddingTop: "2vh", paddingBottom: "2vh" }}>식당 추가</h3>
       <Form.Item
         name="name"
         rules={[

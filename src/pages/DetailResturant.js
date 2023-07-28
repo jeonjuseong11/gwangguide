@@ -1,4 +1,4 @@
-import { Spin, Empty } from "antd";
+import { Spin, Empty, Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -70,7 +70,13 @@ function DetailRestaurant() {
   if (loading) {
     return (
       <div
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "33rem" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          width: "100vw",
+        }}
       >
         <Spin size="large" />
       </div>
@@ -80,7 +86,13 @@ function DetailRestaurant() {
   if (!restaurantData) {
     return (
       <div
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100vw",
+        }}
       >
         <Empty description="해당 가게가 없습니다." />
       </div>
@@ -92,18 +104,19 @@ function DetailRestaurant() {
       style={{
         overflow: "hidden",
         overflowY: "auto",
-        maxHeight: "33rem",
+        maxHeight: "82vh",
+        width: "100vw",
       }}
     >
       <div
         style={{
           borderRadius: "10px",
           backgroundColor: "#f2f2f2",
-          height: "100%",
+          width: "100vw",
           margin: "0 auto",
         }}
       >
-        <img style={{ width: "100%", height: "100%" }} alt="logo" src={restaurantData.image} />
+        <img style={{ objectFit: "cover", width: "50%" }} alt="logo" src={restaurantData.image} />
       </div>
       <div
         style={{
@@ -114,6 +127,8 @@ function DetailRestaurant() {
         }}
       >
         <h1 style={{ margin: "0" }}>{restaurantData.name}</h1>
+        <Tag color="#0055ff">{restaurantData.category}</Tag>
+        <p>{restaurantData.address}</p>
         <div style={{ display: "flex" }}>
           <img
             style={{ width: "5rem", height: "5rem" }}
