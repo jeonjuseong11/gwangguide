@@ -1,13 +1,9 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
   const [isLogin, setIsLogin] = useState(false);
   const token = localStorage.getItem("TOKEN");
 
@@ -18,6 +14,22 @@ const Header = () => {
       setIsLogin(false);
     }
   }, [token, isLogin]);
+
+  const handleLogout = () => {
+    Modal.confirm({
+      title: "로그아웃 확인",
+      content: "로그아웃하시겠습니까?",
+      centered: true, // Add this prop to center the modal
+      onOk: () => {
+        localStorage.clear();
+        setIsLogin(false);
+        navigate("/");
+      },
+      onCancel() {
+        // Do nothing if the user cancels the logout.
+      },
+    });
+  };
 
   return (
     <div
@@ -43,7 +55,7 @@ const Header = () => {
         <Button style={{ border: "0" }}></Button>
       </Link>
       {isLogin ? (
-        <Button type="text" onClick={logout} danger>
+        <Button type="text" onClick={handleLogout} danger>
           로그아웃
         </Button>
       ) : (
