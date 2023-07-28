@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { SearchOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { List, Input, Avatar, Dropdown, Menu, Modal, message, Spin } from "antd";
-import { Link } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
+import { Input, Spin, Modal, message, Form, Button } from "antd";
 import axios from "axios";
+import RestaurantList from "../components/RestaurantList";
 
 const { confirm } = Modal;
 
@@ -12,17 +12,7 @@ function Home() {
   const [filteredData, setFilteredData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [hasToken, setHasToken] = useState(false);
-
-  const DropdownMenu = ({ item }) => (
-    <Menu>
-      <Menu.Item>
-        <Link to={`/edit/${item.id}`}>수정하기</Link>
-      </Menu.Item>
-      <Menu.Item danger onClick={() => showDeleteConfirm(item.id)}>
-        삭제하기
-      </Menu.Item>
-    </Menu>
-  );
+  const [editingRestaurant, setEditingRestaurant] = useState(null); // State for the currently editing restaurant
 
   useEffect(() => {
     // API 요청을 보내고 데이터를 받아오는 함수
@@ -79,20 +69,6 @@ function Home() {
     );
   };
 
-  const getImageUrl = (averageRating) => {
-    if (averageRating >= 4.5) {
-      return process.env.PUBLIC_URL + "/image/veryHigh.png";
-    } else if (averageRating >= 3.5) {
-      return process.env.PUBLIC_URL + "/image/high.png";
-    } else if (averageRating >= 2.5) {
-      return process.env.PUBLIC_URL + "/image/middle.png";
-    } else if (averageRating >= 1.5) {
-      return process.env.PUBLIC_URL + "/image/low.png";
-    } else {
-      return process.env.PUBLIC_URL + "/image/veryLow.png";
-    }
-  };
-
   const showDeleteConfirm = (restaurantId) => {
     confirm({
       title: "정말로 이 식당을 삭제하시겠습니까?",
@@ -135,6 +111,32 @@ function Home() {
     setHasToken(!!token);
   }, []);
 
+  const handleEditRestaurant = async (values) => {
+    try {
+      // API 요청: 해당 식당을 업데이트합니다.
+      await axios.put(
+        `https://ajvxbu60qa.execute-api.ap-northeast-2.amazonaws.com/stores/${editingRestaurant.id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("TOKEN")}`,
+          },
+        }
+      );
+
+      // 업데이트가 성공한 후, 현재 수정 중인 식당 정보를 업데이트합니다.
+      setFilteredData((prevData) =>
+        prevData.map((item) => (item.id === editingRestaurant.id ? { ...item, ...values } : item))
+      );
+
+      message.success("식당 정보가 성공적으로 수정되었습니다.");
+      setEditingRestaurant(null); // 수정이 완료되면 현재 수정 중인 식당을 초기화합니다.
+    } catch (error) {
+      console.error("식당 정보 업데이트 오류:", error);
+      message.error("식당 정보 업데이트에 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
   return (
     <div>
       <div style={{ width: "100%", margin: "0 auto", height: "10rem" }}>
@@ -165,44 +167,78 @@ function Home() {
             <Spin size="large" />
           </div>
         ) : (
-          <List
-            itemLayout="vertical"
-            size="small"
-            style={{ textAlign: "left", height: "20rem", position: "relative" }}
-            dataSource={filteredData}
-            renderItem={(item) => (
-              <List.Item key={item.name}>
-                <Link to={`/restaurant/${item.id}`}>
-                  <List.Item.Meta
-                    avatar={<img style={{ width: "8rem" }} src={item.image} />}
-                    description={
-                      <div>
-                        <span style={{ color: "black", fontWeight: "600" }}>{item.name}</span>
-                        <br />
-                        <span>{item.address}</span>
-                        <br />
-                        <img
-                          style={{ width: "3rem", height: "3rem" }}
-                          alt="rateImage"
-                          src={getImageUrl(parseFloat(item.averageRating))}
-                        />
-                      </div>
-                    }
-                  />
-                  {item.content}
-                </Link>
-                {hasToken && (
-                  <div style={{ position: "relative", left: "21rem", top: "-10rem" }}>
-                    <Dropdown overlay={<DropdownMenu item={item} />} trigger={["hover"]}>
-                      <EllipsisOutlined />
-                    </Dropdown>
-                  </div>
-                )}
-              </List.Item>
-            )}
+          <RestaurantList
+            data={filteredData}
+            loading={loading}
+            hasToken={hasToken}
+            onEdit={setEditingRestaurant}
+            onDelete={showDeleteConfirm}
           />
         )}
       </div>
+      {/* Modal for editing restaurant information */}
+      <Modal
+        title="식당 정보 수정"
+        visible={!!editingRestaurant}
+        onCancel={() => setEditingRestaurant(null)}
+        footer={null}
+      >
+        <Form
+          name="editRestaurant"
+          initialValues={{
+            name: editingRestaurant?.name,
+            address: editingRestaurant?.address,
+            category: editingRestaurant?.category,
+          }}
+          onFinish={handleEditRestaurant}
+        >
+          <label>매장명</label>
+          <Form.Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "매장명을 입력해주세요.",
+              },
+            ]}
+          >
+            <Input style={{ padding: "1rem" }} type="name" placeholder="매장명을 입력해주세요" />
+          </Form.Item>
+          <label>주소</label>
+          <Form.Item
+            name="address"
+            rules={[
+              {
+                required: true,
+                message: "주소를 입력해주세요",
+              },
+            ]}
+          >
+            <Input style={{ padding: "1rem" }} name="address" placeholder="주소를 입력해주세요" />
+          </Form.Item>
+          <label>카테고리</label>
+          <Form.Item
+            name="category"
+            rules={[
+              {
+                required: true,
+                message: "카테고리를 입력해주세요.",
+              },
+            ]}
+          >
+            <Input
+              style={{ padding: "1rem" }}
+              type="category"
+              placeholder="카테고리를 입력해주세요."
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ width: "100%", height: "3.5rem" }}>
+              수정 완료
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 }

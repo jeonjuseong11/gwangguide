@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { List, Spin, Empty, Button } from "antd";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function RankingPage() {
   const [loading, setLoading] = useState(true);
@@ -80,35 +81,39 @@ function RankingPage() {
   }
   return (
     <div>
-      <div style={{ marginBottom: "1rem" }}>
+      <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "center" }}>
         {Object.keys(storesByCategory).map((category) => (
           <Button
+            shape="circle"
             key={category}
             type={selectedCategory === category ? "primary" : "default"}
             onClick={() => handleCategoryClick(category)}
-            style={{ marginRight: "1rem" }}
+            style={{ marginLeft: ".5rem", marginRight: ".5rem", width: "3rem", height: "3rem" }}
           >
-            {category} 카테고리
+            {category}
           </Button>
         ))}
       </div>
       {selectedCategory ? (
         <div>
-          <h2>{selectedCategory} 카테고리 순위</h2>
+          <h2>{selectedCategory} 랭킹</h2>
           {storesByCategory[selectedCategory].length > 0 ? (
             <List
+              style={{ textAlign: "left", padding: "1rem", paddingTop: "0" }}
               dataSource={storesByCategory[selectedCategory]}
               renderItem={(item, index) => (
-                <List.Item key={item.id}>
-                  <List.Item.Meta
-                    title={`${index + 1}. ${item.name}`}
-                    description={
-                      item.Reviews.length === 0
-                        ? "리뷰없음"
-                        : `평점: ${item.averageRating.toFixed(1)}`
-                    }
-                  />
-                </List.Item>
+                <Link to={`/restaurant/${item.id}`}>
+                  <List.Item key={item.id}>
+                    <List.Item.Meta
+                      title={`${index + 1}. ${item.name}`}
+                      description={
+                        item.Reviews.length === 0
+                          ? "리뷰없음"
+                          : `평점: ${item.averageRating.toFixed(1)}`
+                      }
+                    />
+                  </List.Item>
+                </Link>
               )}
             />
           ) : (

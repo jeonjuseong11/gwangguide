@@ -34,7 +34,7 @@ const SignUp = () => {
         backgroundColor: "#ffffff",
         padding: "2rem",
         marginTop: "5rem",
-        marginBottom: "17rem",
+        marginBottom: "5rem",
         borderRadius: "10px",
         width: "25%",
         minWidth: "20rem",

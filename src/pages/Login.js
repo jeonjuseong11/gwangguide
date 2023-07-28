@@ -35,7 +35,7 @@ const Login = () => {
         backgroundColor: "#ffffff",
         padding: "2rem",
         marginTop: "6rem",
-        marginBottom: "17rem",
+        marginBottom: "7.8rem",
         borderRadius: "10px",
         width: "25%",
         minWidth: "20rem",
