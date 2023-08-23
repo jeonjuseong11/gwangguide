@@ -15,11 +15,9 @@ const Login = () => {
       console.log("로그인 성공:", response.data);
       localStorage.setItem("TOKEN", JSON.stringify(response.data));
       navigate("/");
-      // Do something with the successful response, such as redirect to another page or update the state.
     } catch (error) {
       console.log("로그인 실패:", error);
       alert("아이디, 비밀번호를 확인해주세요");
-      // Handle the error, such as displaying an error message to the user.
     }
   };
   useEffect(() => {

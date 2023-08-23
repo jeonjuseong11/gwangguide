@@ -70,11 +70,20 @@ const ReviewPost = () => {
     fetchData();
   }, [id]);
   return (
-    <div style={{ paddingLeft: "2rem", paddingRight: "2rem", textAlign: "left" }}>
+    <div style={{ width: "100vw", margin: "0 auto", textAlign: "left" }}>
       {selectedData && (
-        <h3 style={{ marginTop: "0.5rem", marginBottom: "0" }}> {selectedData.name} 리뷰 작성</h3>
+        <h3 style={{ marginTop: "0.5rem", marginBottom: "0", padding: "1rem" }}>
+          {" "}
+          {selectedData.name} 리뷰 작성
+        </h3>
       )}
-      <Form name="reviewForm" onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+      <Form
+        style={{ padding: "1rem" }}
+        name="reviewForm"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        layout="vertical"
+      >
         <label>리뷰 내용</label>
         <Form.Item
           name="review"

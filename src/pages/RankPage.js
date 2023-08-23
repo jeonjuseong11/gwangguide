@@ -78,7 +78,13 @@ function RankingPage() {
   if (Object.keys(storesByCategory).length === 0) {
     return (
       <div
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          width: "100vw",
+        }}
       >
         <Empty description="가게 정보가 없습니다." />
       </div>
